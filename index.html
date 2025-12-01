@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz & Flashcarddd Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">
+                <i class="fas fa-brain"></i>
+                Quiz & Flashcardd Generator
+            </h1>
+            <div class="nav-links">
+                <button class="nav-btn active" data-page="home">
+                    <i class="fas fa-home"></i> Home
+                </button>
+                <button class="nav-btn" data-page="quiz">
+                    <i class="fas fa-question-circle"></i> Quiz
+                </button>
+                <button class="nav-btn" data-page="flashcards">
+                    <i class="fas fa-cards-blank"></i> Flashcards
+                </button>
+                <button class="nav-btn" data-page="dashboard">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <!-- Home Page -->
+        <div id="home-page" class="page active">
+            <div class="container">
+                <div class="hero-section">
+                    <h2>Generate Quizzes & Flashcards</h2>
+                    <p>Enter a topic or upload a PDF to create personalized learning materials</p>
+                </div>
+
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="topic-input">Enter Topic:</label>
+                        <input type="text" id="topic-input" placeholder="e.g., Machine Learning, World War II, Photosynthesis...">
+                    </div>
+
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="pdf-upload">Upload PDF:</label>
+                        <div class="file-upload">
+                            <input type="file" id="pdf-upload" accept=".pdf" hidden>
+                            <button class="upload-btn" onclick="document.getElementById('pdf-upload').click()">
+                                <i class="fas fa-upload"></i>
+                                Choose PDF File
+                            </button>
+                            <span id="file-name" class="file-name"></span>
+                        </div>
+                    </div>
+
+                    <div class="generate-options">
+                        <label>Generate:</label>
+                        <div class="option-buttons">
+                            <button class="option-btn" data-type="quiz">
+                                <i class="fas fa-question-circle"></i>
+                                Quiz
+                            </button>
+                            <button class="option-btn" data-type="flashcards">
+                                <i class="fas fa-cards-blank"></i>
+                                Flashcards
+                            </button>
+                            <button class="option-btn" data-type="both">
+                                <i class="fas fa-layer-group"></i>
+                                Both
+                            </button>
+                        </div>
+                    </div>
+
+                    <button id="generate-btn" class="generate-btn" disabled>
+                        <i class="fas fa-magic"></i>
+                        Generate Content
+                    </button>
+                </div>
+
+                <div id="loading" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>Generating content...</p>
+                </div>
+
+                <div id="error-message" class="error-message hidden"></div>
+            </div>
+        </div>
+
+        <!-- Quiz Page -->
+        <div id="quiz-page" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h2>Quiz</h2>
+                    <div class="topic-selector">
+                        <label for="quiz-topic-select">Select Topic:</label>
+                        <select id="quiz-topic-select">
+                            <option value="">Choose a topic...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="quiz-container" class="quiz-container">
+                    <div class="no-content">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>No Quiz Available</h3>
+                        <p>Generate a quiz from the home page to get started!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flashcards Page -->
+        <div id="flashcards-page" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h2>Flashcards</h2>
+                    <div class="topic-selector">
+                        <label for="flashcard-topic-select">Select Topic:</label>
+                        <select id="flashcard-topic-select">
+                            <option value="">Choose a topic...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="flashcards-container" class="flashcards-container">
+                    <div class="no-content">
+                        <i class="fas fa-cards-blank"></i>
+                        <h3>No Flashcards Available</h3>
+                        <p>Generate flashcards from the home page to get started!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page">
+            <div class="container">
+                <h2>Progress Dashboard</h2>
+                
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-topics">0</h3>
+                            <p>Total Topics</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-questions">0</h3>
+                            <p>Total Questions</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-cards-blank"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-flashcards">0</h3>
+                            <p>Total Flashcards</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="wrong-answers">0</h3>
+                            <p>Wrong Answers</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-section">
+                    <h3>Topic Progress</h3>
+                    <div id="topic-progress" class="topic-progress">
+                        <div class="no-content">
+                            <i class="fas fa-chart-line"></i>
+                            <p>No progress data available yet</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wrong-answers-section">
+                    <h3>Review Wrong Answers</h3>
+                    <div id="wrong-answers-list" class="wrong-answers-list">
+                        <div class="no-content">
+                            <i class="fas fa-check-circle"></i>
+                            <p>No wrong answers to review</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- PDF.js for PDF text extraction (optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+    <!-- App entry: use ES Modules -->
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
